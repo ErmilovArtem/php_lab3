@@ -1,0 +1,36 @@
+<?php
+
+namespace API\Studio;
+
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
+
+class StudioDeliteTest extends TestCase
+{
+    use DatabaseTransactions; // Если вы используете базу данных, для обновления БД после каждого теста
+
+    public function test_delete_studio_204(): void
+    {
+        $response = $this->delete('/api/v1/studios/42');
+
+        $response->assertStatus(204);
+
+        // Assert that the studio exists in the database
+        $this->assertDatabaseHas('studios', [
+            'id' => 44,
+        ]);
+    }
+
+    public function test_delete_studio_404_byId(): void
+    {
+        $response = $this->delete('/api/v1/studios/4200');
+
+        $response->assertStatus(404);
+
+        // Assert that the studio exists in the database
+        $this->assertDatabaseHas('studios', [
+            'id' => 44,
+        ]);
+    }
+
+}

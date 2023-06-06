@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Banner;
+use App\Models\BannerCategory;
+use App\Models\Director;
+use App\Models\Movie;
+use App\Models\Studio;
+use App\Models\StudioMovie;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Director::factory(100)->create();
+        Studio::factory(100)->create();
+        Movie::factory(100)->create();
+        StudioMovie::factory(100)->create();
     }
 }
