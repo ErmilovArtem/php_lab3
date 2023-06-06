@@ -1,0 +1,1220 @@
+openapi: 3.0.0
+
+info:
+  title: Studio API
+  description: Endpoints for managing studios
+  version: 1.0.0
+
+paths:
+
+  /api/v1/studioMovieRelations:
+    get:
+      summary: Get all studio movie relations
+      tags:
+        - StudioMovieRelation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '204':
+          description: No Content
+        '500':
+          description: Server Error
+    post:
+      summary: Create a new studio movie relation
+      tags:
+        - StudioMovieRelation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioMovieRelationRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '500':
+          description: Server Error
+
+  /api/v1/studioMovieRelations/{studioId}:
+    get:
+      summary: Get a specific studio movie relation
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: studioId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the studio
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+    put:
+      summary: Replace a studio movie relation
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: studioId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the studio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceStudioMovieRelationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+    delete:
+      summary: Delete a studio movie relation
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: studioId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the studio
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+  /api/v1/studioMovieRelations/movie/{movieId}:
+    get:
+      summary: Get all studio movie relations by movieId
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '204':
+          description: No Content
+        '500':
+          description: Server Error
+  /api/v1/studioMovieRelations/studio/{studioId}:
+    get:
+      summary: Get all studio movie relations by studioId
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResponse'
+        '204':
+          description: No Content
+        '500':
+          description: Server Error
+
+  /api/v1/studioMovieRelations/studio/{studioId}/movie/{movieId}:
+    post:
+      summary: Create a new studioMovie relation
+      tags:
+        - StudioMovieRelation
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '201':
+          description: Created. StudioMovie relation created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudioMovieRelationsResource'
+        '400':
+          description: Bad Request. Invalid request or missing required fields.
+        '500':
+          description: Internal Server Error. Failed to create studioMovie relation.
+
+  /api/v1/movies:
+    post:
+      summary: Create a movie
+      tags:
+        - Movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '500':
+          description: Internal Server Error
+    get:
+      summary: Get all movies
+      tags:
+        - Movies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+  /api/v1/movies/{movieId}:
+    get:
+      summary: Get a movie by ID
+      tags:
+        - Movies
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+    patch:
+      summary: Update a movie
+      tags:
+        - Movies
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchMovieRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '500':
+          description: Internal Server Error
+
+    put:
+      summary: Replace a movie
+      tags:
+        - Movies
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceMovieRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '500':
+          description: Internal Server Error
+
+    delete:
+      summary: Delete a movie
+      tags:
+        - Movies
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '500':
+          description: Internal Server Error
+
+  /api/v1/movies/{movieId}/director:
+    get:
+      summary: Get the director of a movie
+      tags:
+        - Movies
+      operationId: getDirectorOfMovie
+      parameters:
+        - in: path
+          name: movieId
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Director not found
+  /api/v1/movies/{movieId}/studios:
+    get:
+      summary: Get the studios associated with a movie
+      tags:
+        - Movies
+      operationId: getStudiosByMovie
+      parameters:
+        - in: path
+          name: movieId
+          description: ID of the movie
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No studios found for this movie
+  /api/v1/movies/orderByNameAsc:
+    get:
+      summary: Get all movies ordered by name (ascending)
+      tags:
+        - Movies
+      operationId: allByOrderNameAsc
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/orderByNameDesc:
+    get:
+      summary: Get all movies ordered by name (descending)
+      tags:
+        - Movies
+      operationId: allByOrderNameDesc
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/orderByDateAsc:
+    get:
+      summary: Get all movies ordered by release date (ascending)
+      tags:
+        - Movies
+      operationId: allByOrderDateAsc
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/orderByDateDesc:
+    get:
+      summary: Get all movies ordered by release date (descending)
+      tags:
+        - Movies
+      operationId: allByOrderDateDesc
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/name/{name}:
+    get:
+      summary: Get movies by name
+      tags:
+        - Movies
+      operationId: allByName
+      parameters:
+        - in: path
+          name: name
+          description: Name of the movie
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/genre/{genre}:
+    get:
+      summary: Get movies by genre
+      tags:
+        - Movies
+      operationId: allByGenre
+      parameters:
+        - in: path
+          name: genre
+          description: Genre of the movie
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/genreFast/{genre}:
+    get:
+      summary: Get movies by genre (fast)
+      tags:
+        - Movies
+      operationId: allByGenreFast
+      parameters:
+        - in: path
+          name: genre
+          description: Genre of the movie
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+  /api/v1/movies/gatherRating/{rating}:
+    get:
+      summary: Get movies with a rating greater than or equal to the specified rating
+      tags:
+        - Movies
+      operationId: allByGatherRating
+      parameters:
+        - in: path
+          name: rating
+          description: Minimum rating of the movies
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: Empty result
+
+  /api/v1/directors:
+    get:
+      tags:
+        - Directors
+      summary: Get all directors
+      operationId: getAllDirectors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '204':
+          description: No Content
+        '500':
+          description: Server Error
+    post:
+      tags:
+        - Directors
+      summary: Create a director
+      operationId: createDirector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDirectorRequest'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '500':
+          description: Server Error
+
+  /api/v1/directors/getById/{directorId}:
+    get:
+      tags:
+        - Directors
+      summary: Get a director by ID
+      operationId: getDirector
+      parameters:
+        - name: directorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+  /api/v1/directors/{directorId}:
+    patch:
+      tags:
+        - Directors
+      summary: Update a director by ID
+      operationId: updateDirector
+      parameters:
+        - name: directorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchDirectorRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+
+    delete:
+      tags:
+        - Directors
+      summary: Delete a director by ID
+      operationId: deleteDirector
+      parameters:
+        - name: directorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '500':
+          description: Server Error
+  /api/v1/directors/allByOrderNameAsc:
+    get:
+      tags:
+        - Directors
+      summary: ordered by name in ascending order.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '204':
+          description: No directors found
+
+  /api/v1/directors/allByOrderNameDesc:
+    get:
+      tags:
+        - Directors
+      summary: ordered by name in descending order.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectorsResource'
+        '204':
+          description: No directors found
+
+  /api/v1/directors/allMoviesByDirId/{directorId}:
+    get:
+      tags:
+        - Directors
+      summary: Get all movies by director ID.
+      parameters:
+        - name: directorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesResource'
+        '204':
+          description: No movies found for this director
+
+  /api/v1/directors/getStudiosByDirector/{directorId}:
+    get:
+      tags:
+        - Directors
+      summary: Get all studios by director ID.
+      parameters:
+        - name: directorId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+        '204':
+          description: No studios found for this director
+
+
+  /api/v1/studios:
+    post:
+      tags:
+        - Studios
+      summary: Create a new studio
+      operationId: createStudio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioRequest'
+      responses:
+        '201':
+          description: Studio created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+        '500':
+          description: Error inside
+
+  /api/v1/studios/{studioId}:
+    patch:
+      tags:
+        - Studios
+      summary: Update a studio
+      operationId: patchStudio
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchStudioRequest'
+      responses:
+        '200':
+          description: Studio updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+        '404':
+          description: Bad ID
+        '500':
+          description: Error inside
+
+    put:
+      tags:
+        - Studios
+      summary: Replace a studio
+      operationId: replaceStudio
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceStudioRequest'
+      responses:
+        '200':
+          description: Studio replaced successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+        '404':
+          description: Bad ID
+        '500':
+          description: Error inside
+
+    delete:
+      tags:
+        - Studios
+      summary: Delete a studio
+      operationId: deleteStudio
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Studio deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '404':
+          description: Bad ID
+        '500':
+          description: Error inside
+
+  /api/v1/studios/getById/{studioId}:
+    get:
+      tags:
+        - Studios
+      summary: Get a studio
+      operationId: getStudio
+      parameters:
+        - name: studioId
+          in: path
+          description: ID of the studio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Studio found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+        '404':
+          description: Bad ID
+
+
+  /api/v1/studios/all:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios
+      operationId: getAllStudios
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+  /api/v1/studios/allByOrderNameAsc:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios ordered by name asc
+      operationId: getAllStudiosByOrderNameAsc
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+  /api/v1/studios/allByOrderNameDesc:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios ordered by name desc
+      operationId: getAllStudiosByOrderNameAsc
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+  /api/v1/studios/allByOrderDateAsc:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios ordered by date ascending
+      operationId: getAllStudiosByOrderNameAsc
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+  /api/v1/studios/allByOrderDateDesc:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios ordered by date desc
+      operationId: getAllStudiosByOrderNameAsc
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+  /api/v1/studios/active:
+    get:
+      tags:
+        - Studios
+      summary: Get all studios who active
+      operationId: getAllStudiosByOrderNameAsc
+      responses:
+        '204':
+          description: No studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResource'
+        '200':
+          description: Studios found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudiosResource'
+
+components:
+  schemas:
+
+    CreateStudioMovieRelationRequest:
+      type: object
+      properties:
+        movie_id:
+          type: integer
+          description: ID of the movie
+        studio_id:
+          type: integer
+          description: ID of the studio
+      required:
+        - movie_id
+        - studio_id
+      example:
+        movie_id: 42
+        studio_id: 24
+
+    ReplaceStudioMovieRelationRequest:
+      type: object
+      properties:
+        movie_id:
+          type: integer
+          description: ID of the movie
+        studio_id:
+          type: integer
+          description: ID of the studio
+      required:
+        - movie_id
+        - studio_id
+      example:
+        movie_id: 42
+        studio_id: 24
+
+    StudioMovieRelationsResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the studio movie relation
+        movie_id:
+          type: integer
+          description: ID of the movie
+        studio_id:
+          type: integer
+          description: ID of the studio
+      example:
+        movie_id: 42
+        studio_id: 24
+
+
+    CreateMovieRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 55
+        description:
+          type: string
+        year:
+          type: string
+          format: date
+        genre:
+          type: string
+          minLength: 3
+          maxLength: 55
+        image:
+          type: string
+          minLength: 10
+          maxLength: 55
+        rating:
+          type: number
+          minimum: 1
+          maximum: 10
+        director_id:
+          type: integer
+          minimum: 1
+      example:
+        name: Example Movie
+        description: This is an example movie.
+        year: 2022-01-01
+        genre: Action
+        image: example.jpg
+        rating: 8.5
+        director_id: 1
+    PatchMovieRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 55
+        description:
+          type: string
+        year:
+          type: string
+          format: date
+        genre:
+          type: string
+          minLength: 3
+          maxLength: 55
+        image:
+          type: string
+          minLength: 10
+          maxLength: 55
+        rating:
+          type: number
+          minimum: 1
+          maximum: 10
+        director_id:
+          type: integer
+          minimum: 1
+      example:
+        name: Updated Movie
+        description: This is the updated version of the movie.
+        year: 2023-01-01
+        genre: Drama
+        image: updated.jpg
+        rating: 9.0
+        director_id: 2
+    ReplaceMovieRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 55
+        description:
+          type: string
+        year:
+          type: string
+          format: date
+        genre:
+          type: string
+          minLength: 3
+          maxLength: 55
+        image:
+          type: string
+          minLength: 10
+          maxLength: 55
+        rating:
+          type: number
+          minimum: 1
+          maximum: 10
+        director_id:
+          type: integer
+          minimum: 1
+      example:
+        name: Updated Movie
+        description: This is the updated version of the movie.
+        year: 2023-01-01
+        genre: Drama
+        image: updated.jpg
+        rating: 9.0
+        director_id: 2
+
+
+    CreateDirectorRequest:
+      type: object
+      properties:
+        full_name:
+          type: string
+        description:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+        date_of_debute:
+          type: string
+          format: date
+    PatchDirectorRequest:
+      type: object
+      properties:
+        full_name:
+          type: string
+        description:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+        date_of_debute:
+          type: string
+          format: date
+    DirectorsResource:
+      type: object
+      properties:
+        full_name:
+          type: string
+        description:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+        date_of_debute:
+          type: string
+          format: date
+
+
+    Studio:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the studio
+        name:
+          type: string
+          description: The name of the studio
+        year_of_foundation:
+          type: integer
+          description: The year the studio was founded
+        active:
+          type: boolean
+          description: Indicates if the studio is active
+        description:
+          type: string
+          description: The description of the studio
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the studio was created
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the studio was last updated
+
+    CreateStudioRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the studio
+        year_of_foundation:
+          type: integer
+          description: The year the studio was founded
+        active:
+          type: boolean
+          description: Indicates if the studio is active
+        description:
+          type: string
+          description: The description of the studio
+      example:
+        name: Example Studio
+        year_of_foundation: 2000-01-01
+        active: true
+        description: This is an example studio
+
+    PatchStudioRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The new name of the studio
+        year_of_foundation:
+          type: integer
+          description: The new year the studio was founded
+        active:
+          type: boolean
+          description: Indicates if the studio should be active
+        description:
+          type: string
+          description: The new description of the studio
+      example:
+        name: Updated Studio
+        year_of_foundation: 2000-01-01
+
+    ReplaceStudioRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The new name of the studio
+        year_of_foundation:
+          type: integer
+          description: The new year the studio was founded
+        active:
+          type: boolean
+          description: Indicates if the studio should be active
+        description:
+          type: string
+          description: The new description of the studio
+      example:
+        name: Replaced Studio
+        year_of_foundation: 2000-01-01
+        active: true
+        description: This is an updated studio
+
+    StudiosResource:
+      type: object
+      properties:
+        studio:
+          $ref: '#/components/schemas/Studio'
+
+    EmptyResource:
+      type: array
+      items:
+        type: object
+
+tags:
+  - name: Studios
+    description: Endpoints for managing studios
+  - name: Directors
+    description: Endpoints for managing directors
+  - name: Movies
+    description: Endpoints for managing directors
+  - name: StudioMovieRelation
+    description: Endpoints for managing directors
